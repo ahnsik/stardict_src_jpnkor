@@ -1,0 +1,8 @@
+
+
+아래의 URL 에 접속하여 리눅스용 Start Dict 설치 방법 과, 
+파일 작성을 위한 Tool 을 설치/ 사용해 보자. 
+
+https://sites.google.com/site/hymd3a/linux/stardict#TOC--4
+
+
