@@ -84,23 +84,61 @@ int main(int argc, char *argv[] )
     temporary_buf = replaceAll(target, "        </ul>              ", "</ul>");
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_7\n");
+      printf("-> STEP_7");
       free (target);
       target = temporary_buf;
     }
     temporary_buf = replaceAll(target, "       </div>   ", "</div>");
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_8\n");
+      printf("-> STEP_8");
       free (target);
       target = temporary_buf;
     }
+
+    // Remove <!-- 연세 어학당 XXXX --> tag.
+    temporary_buf = replaceAll(target, "<!-- 연세어학당 출처 여기서 노출 -->", "");
+    if (temporary_buf != NULL)
+    {
+      printf("-> STEP_9");
+      free (target);
+      target = temporary_buf;
+    }
+    temporary_buf = replaceAll(target, "<!-- //연세어학당 출처 여기서 노출 -->", "");
+    if (temporary_buf != NULL)
+    {
+      printf("-> STEP_9");
+      free (target);
+      target = temporary_buf;
+    }
+    temporary_buf = replaceAll(target, "<!-- 연세어학당 이미지 추가 -->", "");
+    if (temporary_buf != NULL)
+    {
+      printf("-> STEP_9");
+      free (target);
+      target = temporary_buf;
+    }
+    temporary_buf = replaceAll(target, "<!-- //연세어학당 이미지 추가 -->", "");
+    if (temporary_buf != NULL)
+    {
+      printf("-> STEP_9");
+      free (target);
+      target = temporary_buf;
+    }
+    temporary_buf = replaceAll(target, "                            </div>", "</div>");
+    if (temporary_buf != NULL)
+    {
+      printf("-> STEP_9");
+      free (target);
+      target = temporary_buf;
+    }
+
 
     // Remove <button> tag.
     temporary_buf = removeButtonTag(target);
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_9\n");
+      printf("-> STEP_a");
       free (target);
       target = temporary_buf;
     }
@@ -108,7 +146,7 @@ int main(int argc, char *argv[] )
     temporary_buf = removeAnchorTag(target);
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_A\n");
+      printf("-> STEP_B\n");
       free (target);
       target = temporary_buf;
     }
