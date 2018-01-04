@@ -2,7 +2,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#define MAX_BUF_LEN 32767
+#define MAX_BUF_LEN 327670
 char buffer[MAX_BUF_LEN];
 // char title[1024];
 
@@ -16,6 +16,7 @@ int main(int argc, char *argv[] )
 {
   FILE *input, *output;
   char *temporary_buf, *target;
+  int   counter;
 
   if (argc < 3) {
     printf("\t\tDummy-HTML tag Remover for stardict-editor.\n\t\t\t-by ccash.\n\nUSAGE: crop_dict [clipped-html-file] [target-file]\n\n");
@@ -33,8 +34,17 @@ int main(int argc, char *argv[] )
     return -1;
   }
 
+  counter = 0;
   while( !feof(input) ) {
     fgets(buffer, MAX_BUF_LEN, input);
+    counter++;
+//    if ((counter % 100)==1 )
+    {
+      printf("%d\n", counter );
+      // if (counter >= 2301)
+      //   printf("%s\n", buffer );
+    }
+
     temporary_buf = replaceAll(buffer, "<span class=\"blind\"> </span>", "");
     if (temporary_buf == NULL)
     {
@@ -44,101 +54,102 @@ int main(int argc, char *argv[] )
     {
       target = temporary_buf;     // free(temporary_buf);
     }
-    printf("STEP_1");
+    // printf("STEP_1");
 
     temporary_buf = replaceAll(target, "<button type=\"button\" title=\"발음 재생\" class=\"play\" data-tts=\"jp\" onclick=\"clickcr(this, 'bdy.exmtts','','',event);\"" , "<button ");
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_2");
+      // printf("-> STEP_2");
       free (target);
       target = temporary_buf;
     }
-    temporary_buf = replaceAll(target, ">      <h5>", "><h5>");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_3");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "</h5>        ", "</h5>");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_4");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "     <div", "<div");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_5");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "         <li class=\"inner_lst\">     ", "<li class=\"inner_lst\">");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_6");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "        </ul>              ", "</ul>");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_7");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "       </div>   ", "</div>");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_8");
-      free (target);
-      target = temporary_buf;
-    }
-
-    // Remove <!-- 연세 어학당 XXXX --> tag.
-    temporary_buf = replaceAll(target, "<!-- 연세어학당 출처 여기서 노출 -->", "");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_9");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "<!-- //연세어학당 출처 여기서 노출 -->", "");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_9");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "<!-- 연세어학당 이미지 추가 -->", "");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_9");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "<!-- //연세어학당 이미지 추가 -->", "");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_9");
-      free (target);
-      target = temporary_buf;
-    }
-    temporary_buf = replaceAll(target, "                            </div>", "</div>");
-    if (temporary_buf != NULL)
-    {
-      printf("-> STEP_9");
-      free (target);
-      target = temporary_buf;
-    }
+    ///////////// white sapce 를 없애기 위한 아래의 코드 들은,  nodejs 의 'condenseWhitespace' 모듈을 이용해서 간단히 처리 했음.
+    // temporary_buf = replaceAll(target, "      <h5>", "<h5>");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_3");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "</h5>        ", "</h5>");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_4");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "     <div", "<div");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_5");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "         <li class=\"inner_lst\">     ", "<li class=\"inner_lst\">");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_6");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "        </ul>              ", "</ul>");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_7");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "       </div>   ", "</div>");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_8");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    //
+    // // Remove <!-- 연세 어학당 XXXX --> tag.
+    // temporary_buf = replaceAll(target, "<!-- 연세어학당 출처 여기서 노출 -->", "");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_9");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "<!-- //연세어학당 출처 여기서 노출 -->", "");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_9");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "<!-- 연세어학당 이미지 추가 -->", "");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_9");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "<!-- //연세어학당 이미지 추가 -->", "");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_9");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+    // temporary_buf = replaceAll(target, "                            </div>", "</div>");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_9");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
 
 
     // Remove <button> tag.
     temporary_buf = removeButtonTag(target);
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_a");
+      // printf("-> STEP_a");
       free (target);
       target = temporary_buf;
     }
@@ -146,7 +157,7 @@ int main(int argc, char *argv[] )
     temporary_buf = removeAnchorTag(target);
     if (temporary_buf != NULL)
     {
-      printf("-> STEP_B\n");
+      // printf("-> STEP_B\n");
       free (target);
       target = temporary_buf;
     }
