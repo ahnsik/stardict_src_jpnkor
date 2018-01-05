@@ -42,6 +42,8 @@ for (var i=start_index; i<start_index+10; i++) {
         conjugation_end = content_blk.indexOf('<!-- //conjugation -->');       // '<!-- //conjugation -->'
         if ( (conjugation_start > 20) && (conjugation_end > conjugation_start) ) {   // 존재한다면.
           conjugation_blk = content_blk.substring(conjugation_start, conjugation_end);
+            // 동사변형 방법에 대한 내용을 table 로 변경 -
+            // temp_blk = condenseWhitespace(conjugation_blk);
         } else {
           conjugation_blk = "";
         }
@@ -57,8 +59,8 @@ for (var i=start_index; i<start_index+10; i++) {
         meaning_blk = temp_blk.replace(/<!-- \/\/연세어학당 출처 여기서 노출 -->/g, "");
         temp_blk = meaning_blk.replace(/<!-- 연세어학당 이미지 추가 -->/g, " ");
         meaning_blk = temp_blk.replace(/<!-- \/\/연세어학당 이미지 추가 -->/g, "");
-        temp_blk = meaning_blk.replace(/      <h5>/g, "<h5>");
-        meaning_blk = temp_blk.replace(/<\/h5>        /g, "<\/h5>");
+        // temp_blk = meaning_blk.replace(/      <h5>/g, "<h5>");
+        // meaning_blk = temp_blk.replace(/<\/h5>        /g, "<\/h5>");
         temp_blk = meaning_blk.replace(/     <div/g, "<div");
         // meaning_blk = temp_blk.replace(/       <\/div>   /g, "<\/div>");
         meaning_blk = condenseWhitespace(temp_blk);

@@ -17,8 +17,6 @@ nodeJS 를 이용하였음.
    $ node crawling_naver_jpnkor.js  
 
 를 실행한다. 같은 폴더에 'jkdic.txt' 라는 텍스트 파일이 만들어 짐. 
-
-
 그 다음, gcc crop_dict.c -o crop_dict   와 같은 명령어로 컴파일 한 상태로, 
 
     ./crop_dict jkdic.txt JPNKOR_src.txt 
@@ -31,9 +29,28 @@ nodeJS 를 이용하였음.
     ./crop_dict kjdic.txt KORJPN_src.txt
 
 
-
 *** 남은 일들:  stardict-editor  로 변환하려면,  index 단어가 중복되면 안된다. 
                 따라서, Sort 하고 index 가 중복되지 않도록 처리하는 과정이 필요함. 
 
+
+  우선,  merge_dup.c  를 만들었다. 이것은 각 행마다 다음 행과 비교하여, 동일한 키워드 로 되어 있다면,  하나의 행으로 합쳐 주는 것이다. 
+근데, 만약 A-B-A 와 같은 순서로 되어 있다면 인접해 있지 않기 때문에 하나로 합쳐줄 수 없다.  그래서 정렬도 필요하다. 
+  check_dup.c  는 A-B-A 와 같이 되어 있는 가능성을 고려해서, 각 행마다 다음 행과 비교해서 가볍게 정렬해 준다.  그러나 1줄씩만 바꿔 주는 동작이라서..  BBB-C-A 와 같이 작은 데이터가 중복된 데이터 뒤에 있다면, 역시 문제가 되기 쉽다. 
+
+   따라서, 두 명령어를 적절히 함께 하여,  
+   1) merge_dup  을 실행한 후에, 
+   2) check_dup  을 실행해서 정렬해 주고,  또 다시
+   3) merge_dup  을 한 번 더 해 주는 것이 좋겠다. 
+
+merge_dup.c 와  check_dup.c  를 하나의 기능으로 합쳐서, check_dup.c 로 만들었다. 
+이제 merge_dup.c 는 필요 없고,  check_dup.c  하나 만으로, 위에서 말했던 정렬과 merge 를 한꺼번에 해 준다.  그러나 여전히 정렬하는 기능에 한계가 있기 때문에.. 한번에 되지는 않고...  
+
+    check_dup temp1 temp2   로 1차 merge 해 주고, 
+    check_dup temp2 temp1   으로 2차 merge 해 주고,
+    check_dup temp1 temp2   로 3차 또 merge 해 주고..
+
+ 이런식으로 반복적으로 해 나아가서... merge 되는 것의 갯수가 0 이거나.. reorder 되는 갯수가 0 가 된다면,  더이상 merge 할 필요가 없을 것 같다. 이 단계에서 완성이라고 해 도 좋을 것 같다. 
+
+   ** 이 때, 만약, merge_count = 1 인데, 맨 마지막의 데이터가 merge 된 상태라면.. 더이상 할 것이 없다고 봐도 된다. --> 마지막 것만 계속 중복되어 merge 되고 있는 상태이므로. 
 ------------------------------------------- End of this document ------------------
 

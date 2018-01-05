@@ -56,13 +56,15 @@ int main(int argc, char *argv[] )
     }
     // printf("STEP_1");
 
-    temporary_buf = replaceAll(target, "<button type=\"button\" title=\"발음 재생\" class=\"play\" data-tts=\"jp\" onclick=\"clickcr(this, 'bdy.exmtts','','',event);\"" , "<button ");
-    if (temporary_buf != NULL)
-    {
-      // printf("-> STEP_2");
-      free (target);
-      target = temporary_buf;
-    }
+    /////////////////  버튼 태그는 나중에 char *removeButtonTag(char *s);  함수를 호출하여 제거하게 될 것이므로. 별도 사전처리가 불필요 함. 
+    // temporary_buf = replaceAll(target, "<button type=\"button\" title=\"발음 재생\" class=\"play\" data-tts=\"jp\" onclick=\"clickcr(this, 'bdy.exmtts','','',event);\"" , "<button ");
+    // if (temporary_buf != NULL)
+    // {
+    //   // printf("-> STEP_2");
+    //   free (target);
+    //   target = temporary_buf;
+    // }
+
     ///////////// white sapce 를 없애기 위한 아래의 코드 들은,  nodejs 의 'condenseWhitespace' 모듈을 이용해서 간단히 처리 했음.
     // temporary_buf = replaceAll(target, "      <h5>", "<h5>");
     // if (temporary_buf != NULL)
